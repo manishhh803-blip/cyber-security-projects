@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake Link Detector</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    margin-top: 50px;
+    background-color: #f4f4f4;
+}
+
+input {
+    padding: 10px;
+    width: 300px;
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    width: 320px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+}
+
+/* Dark mode */
+.dark {
+    background-color: #121212;
+    color: white;
+}
+
+.dark .container {
+    background: #1e1e1e;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Fake Link Detector 🔍</h2>
+
+<input type="text" id="linkInput" placeholder="Enter website URL">
+
+<br><br>
+
+<button onclick="checkLink()">Check Link</button>
+<button onclick="toggleMode()" id="modeBtn">🌙 Dark Mode</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+function checkLink() {
+    let url = document.getElementById("linkInput").value;
+    let result = document.getElementById("result");
+
+    let score = 100;
+
+    if (!url.startsWith("https://")) score -= 40;
+    if (url.includes("free") || url.includes("win") || url.includes("money")) score -= 30;
+    if (url.length < 10) score -= 20;
+
+    if (score >= 70) {
+        result.innerHTML = "✅ Safe Link (" + score + "%)";
+        result.style.color = "green";
+    } 
+    else if (score >= 40) {
+        result.innerHTML = "⚠️ Suspicious Link (" + score + "%)";
+        result.style.color = "orange";
+    } 
+    else {
+        result.innerHTML = "❌ Dangerous Link (" + score + "%)";
+        result.style.color = "red";
+    }
+}
+
+function toggleMode() {
+    document.body.classList.toggle("dark");
+
+    let btn = document.getElementById("modeBtn");
+
+    if (document.body.classList.contains("dark")) {
+        btn.innerText = "☀️ Light Mode";
+    } else {
+        btn.innerText = "🌙 Dark Mode";
+    }
+}
+</script>
+
+</body>
+</html>
